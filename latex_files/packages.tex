@@ -1,0 +1,122 @@
+% !TEX root = main.tex
+
+% ----------------------------------------
+% Sprache und Kodierung
+% ----------------------------------------
+\usepackage[ngerman]{babel}
+\usepackage[T1]{fontenc}           % Korrekte Zeichenkodierung für Umlaute
+\usepackage[utf8]{inputenc}        % UTF-8 Encoding
+
+% ----------------------------------------
+% Schrift und Layout
+% ----------------------------------------
+\usepackage{helvet}                % Helvetica Schrift
+\renewcommand{\familydefault}{\sfdefault}
+
+\usepackage{geometry}              % Seitenränder
+\geometry{
+  left=20mm,
+  right=20mm,
+  top=25mm,
+  bottom=35mm
+}
+
+\usepackage{setspace}              % Zeilenabstand
+\onehalfspacing
+
+% ----------------------------------------
+% Kopf- und Fußzeilen
+% ----------------------------------------
+\usepackage{fancyhdr}
+\setlength{\headheight}{34.09206pt} % Warnung zu kleiner Kopfzeile beheben
+
+% ----------------------------------------
+% Farben, Tabellen und Formatierung
+% ----------------------------------------
+\usepackage{booktabs}  % Schönere Tabellen
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{hhline}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{ragged2e}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{J}[1]{>{\justifying\arraybackslash}p{#1}}
+\usepackage{tocloft}
+% ----------------------------------------
+% Mathematische und wissenschaftliche Pakete
+% ----------------------------------------
+\usepackage{amsmath}
+\usepackage{siunitx}
+\sisetup{detect-all}
+\DeclareSIUnit\hour{h}
+\DeclareSIUnit{\USD}{\$}
+\usepackage[gen]{eurosym}
+\usepackage{fp}
+
+% ----------------------------------------
+% Abbildungen und Diagramme
+% ----------------------------------------
+\usepackage{graphicx}
+\graphicspath{{images/}}
+
+\usepackage{float}                 % Genaue Platzierung von Bildern
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+% ----------------------------------------
+% Hyperlinks
+% ----------------------------------------
+\usepackage[hidelinks]{hyperref}  % Keine sichtbaren Rahmen
+\hypersetup{
+  linktoc=all,                     % Verlinke auch Inhaltsverzeichnis
+}
+
+\usepackage{url}                   % URLs korrekt darstellen
+
+\usepackage[capitalize,nameinlink]{cleveref}
+
+% ----------------------------------------
+% Glossar und Abkürzungen
+% ----------------------------------------
+\usepackage[acronym]{glossaries}
+\usepackage{caption}
+
+% ----------------------------------------
+% ToDo-Notizen
+% ----------------------------------------
+\setlength{\marginparwidth}{2cm}  % Verhindert todonotes-Warnung
+\usepackage{todonotes}
+
+% ----------------------------------------
+% Listings / Quellcode
+% ----------------------------------------
+\usepackage{listings}
+
+\definecolor{codegreen}{rgb}{0,0.7,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.2,0.2,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.95}
+
+\lstdefinestyle{mystyle}{
+  backgroundcolor=\color{backcolour},
+  commentstyle=\color{codegreen},
+  keywordstyle=\color{codepurple},
+  numberstyle=\tiny\color{codegray},
+  stringstyle=\color{codegreen},
+  basicstyle=\ttfamily\footnotesize,
+  breakatwhitespace=false,
+  breaklines=true,
+  captionpos=b,
+  keepspaces=true,
+  numbers=left,
+  numbersep=5pt,
+  showspaces=false,
+  showstringspaces=false,
+  showtabs=false,
+  tabsize=2
+}
+
+\lstset{style=mystyle}

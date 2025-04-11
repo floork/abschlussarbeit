@@ -1,0 +1,109 @@
+\section{Entwurfsphase}
+
+\subsection{Zielplattform}
+Bei diesem Projekt handelt es sich um eine Dienstanwendung, welche gemäß der Vorgabe des Kapitels \reference{sec:soll-analyse} entwickelt werden soll.
+Hierbei stellt sich die Frage, in welcher Sprache diese Anwendung entwickelt werden soll, hierzu standen C++ und Python zur Auswahl, da \Gls{MetricQ} nur in diesen Sprachen produktionsreif ist.
+Es gibt von \Gls{MetricQ} auch Go oder Rust Versionen, diese bieten jedoch keine vollständige Funktionsunterstützung.
+Durch die Zeitbegrenzung wäre es nicht möglich gewesen, eine neue Sprache für dieses Projekt zu lernen.
+Anhand der Entscheidungsmatrix (im Anhang: \reference{tab:entscheidungsmatrix}), fiel die Wahl auf Python, da diese am Zeit effizientesten das Projekt fertiggestellt bekommt.
+Die Gewichtung wurde auf Basis von einer Gewichtung der Eigenschaften eine Skala von 0,1 bis 0,5 genommen vorgenommen.
+Für die Punktevergabe habe ich 1 bis 4 Punkte gewählt, hierbei bedeuten diese das folgende:
+
+\begin{itemize}
+  \item 1: Erfüllt unsere Bedingungen gar nicht
+  \item 2: Erfüllt unsere Bedingungen teilweise
+  \item 3: Erfüllt unsere Bedingungen gut
+  \item 4: Erfüllt unsere Bedingungen im vollsten Maße
+\end{itemize}
+
+\noindent
+Bei der Entwicklung werden zwei \Gls{framework}s verwendet.
+Das erste Framework ist \Gls{MetricQ}, dies bietet eine Schnittstelle zum Zugreifen auf die Metriken, dieses muss genutzt werden, da sonst nicht auf die Daten zugegriffen werden kann.
+Das zweite Framework ist „pydantic“, dies wurde ausgewählt, da es den Umgang mit \acrshort{JSON} Objekten vereinfacht.
+Da „pydantic“ weit verbreitet ist und der Umgang mit diesem bereits bekannt ist, wurde dieses genutzt.
+Als Hardware wird für die Entwicklung eine sogenannte „Research Cloud VM“ genutzt, und später vom Kunden eigenständig betrieben.
+Die „Enterprise Cloud“ hat den Vorteil, dass sie unter anderem eine \Gls{hochverfuegbarkeit} Garantie besitzt.
+Diese \Gls{virtuelle-maschine}n, werden hierbei im Rechenzentrum der \acrshort{TU} betrieben.
+„Enterprise Cloud VMs“ lassen sich speziell für derartige Einsatzzwecke beantragen und sind für den Dauerbetrieb geeignet.
+Eine alternative Lösung wäre nicht möglich, da die Dienstanweisung innerhalb des internen \acrshort{TU}-Netzwerks laufen, und 24/7 verfügbar sein muss.
+Es gäbe zwar auch die Möglichkeit, die Anwendungen auf einem \Gls{bare-metal} System zu betreiben, das würde aber gegen die Richtlinie des \acrshort{ZIH} verstoßen, alles zu virtualisieren.
+Diese Umstände sind nur mit diesen speziellen \acrshort{VM}s gegeben.
+Als Betriebssystem wird eine beliebige Linux-\Gls{distribution} verwendet, in diesem Fall wurde Debian genommen, da diese schon vorausgewählt war.
+
+\subsection{Datenmodell}
+Für die Kommunikation zwischen der Anwendung und \Gls{Checkmk} wird ein \texttt{Piggyback File} verwendet.
+Diese Dateien werden in ein bestimmtes Verzeichnis auf der \acrshort{VM} gespeichert.
+Der \Gls{Checkmk} Agent ist ein Programm, das auf jedem \Gls{client} von \Gls{Checkmk} laufen muss – in unserem Fall also auf der \acrshort{VM}.
+Dieser Agent ist unter anderem dafür zuständig, das \texttt{Spool} Verzeichnis auszulesen.
+Dabei handelt es sich um ein spezielles Verzeichnis, in dem alle Piggyback Files abgelegt werden.
+Die dort gespeicherten Daten werden anschließend vom Agenten an den \Gls{Checkmk} Server übertragen und dort weiterverarbeitet.
+Ein \texttt{Piggyback File} ist dabei eine Textdatei mit einer vordefinierten Struktur.
+
+\begin{lstlisting}[language=bash, caption=Beispiel Piggyback File, label=lst:piggyback-file]
+<<<<RACKNAME>>>>
+<<<labels:sep(0)>>>\n
+{"cluster": "Test"}
+{"room": "RAUM"}
+{"rack": "RACKNAME"}
+<<<local>>>
+P "staticTest" kittens=0.44691472747966443 BESCHREIBUNG ZU DEM CHECK
+P "dynamicTest" kittens=-0.006283143966158773;1.0:1.0;1.0:1.0 BESCHREIBUNG ZU DEM CHECK
+<<<<>>>>
+
+\end{lstlisting}
+
+\noindent
+Hier habe ich einen Beispielaufbau des \texttt{Piggyback File} geschrieben.
+Dieses beginnt mit dem Namen des \Gls{rack}s, welcher zwischen 4 größer als und kleiner als Zeichen steht.
+Dies hat die Bewandtnis, dass hiermit mehrere Racks, beziehungsweise \textit{Hosts}, wie sie in \Gls{Checkmk} genannt werden, in einer Datei gespeichert werden können.
+In diesem Projekt werde ich allerdings nur ein \Gls{rack} pro Datei nutzen, damit keine zu große Dateien erzeugt werden.
+Unter dem Rackname kommt der Abschnitt \textit{Labels}.
+Diese werden als \texttt{Key-Value} Paaren gespeichert.
+Dies ist vom Prinzip der gleiche Aufbau wie bei \acrshort{JSON}.
+Nach dem Abschnitt \texttt{Labels} beginnt der Abschnitt \texttt{Local}.
+In dem werden sogenannte lokale \textit{Checks} gespeichert.
+\textit{Lokale Checks} sind \textit{Checks}, welche nichts mit dem \textit{Host}, auf dem sie laufen, zu tun haben.
+Diese sind genau für Anwendungsfälle, wie dieser hier, da.
+Ein \textit{lokaler Check} hat einen bestimmten Aufbau.
+Begonnen wird mit dem Status, welche in unserem Fall auf \texttt{P} gesetzt wird.
+Dies ist notwendig, da mit \texttt{P} gekennzeichnet ist, dass sich \Gls{Checkmk} selbständig den Status berechnen kann.
+Nach dem Status kommt der Name des \textit{Checks}, welcher hier \texttt{staticTest} ist.
+Anschließend kommt der wichtigste Teil des \textit{Checks}.
+Dieser Teil hat auch einen speziellen Aufbau.
+Begonnen wird mit der Einheit des \textit{Checks}.
+Nach der Einheit kommt das ist-Gleich Zeichen, gefolgt von dem Wert des \textit{Checks}.
+Nach dem Wert kommen die Schwellwerte.
+Diese haben zuerst die Werte für das \texttt{WARN}, bei diesem wird zuerst der untere Schwellwert gesetzt und dann der obere Schwellwert.
+Dieser werden durch einen Doppelpunkt voneinander getrennt.
+Nach dem \texttt{WARN} Schwellwert kommen die \texttt{CRIT} Schwellwerte.
+Diese haben die gleiche Struktur wie die \texttt{WARN} Schwellwerten.
+Nach dem \texttt{CRIT} Schwellwert kommt das \texttt{Min} und das \texttt{Max}, welche einfach ein Wert sind.
+Zum Schluss kommt die Beschreibung des \textit{Checks}.
+
+\subsection{Geschäftslogik}
+Der Ablauf der Anwendung basiert auf den Daten, die aus dem \Gls{MetricQ}-Netzwerk kommen. Diese werden durch die \Gls{MetricQ} Library über \texttt{RPC Callbacks} an die Anwendung gesendet. Der Ablauf wird in den folgenden Schritten beschrieben:
+
+\begin{enumerate}
+  \item \textbf{Verbindung herstellen}: Die \Gls{MetricQ} Library stellt eine Verbindung zu \textbf{MetricQ} her.
+  \item \textbf{Metriken abonnieren}: Nach der erfolgreichen Verbindung werden die relevanten Metriken über die Library abonniert.
+  \item \textbf{Daten empfangen}: Die abonnierten Daten werden durch die \texttt{Callbacks}-Funktion empfangen. Diese Daten enthalten die \textbf{Metrik}, den \textbf{Zeitpunkt} und den \textbf{Wert}.
+  \item \textbf{Checks generieren}: Die empfangenen Daten werden verarbeitet, und es werden \textbf{Checks} erstellt.
+  \item \textbf{Checks ausführen}: Die generierten Checks werden anschließend ausgeführt.
+  \item \textbf{Daten ins Piggyback File schreiben}: Die Ergebnisse der Checks werden in das \textbf{Piggyback File} geschrieben.
+  \item \textbf{Checkmk Agent lesen}: Der \Gls{Checkmk} Agent liest das \textbf{Piggyback File}.
+  \item \textbf{Alarmierung}: Falls ein Alarm ausgelöst wird, informiert \Gls{Checkmk} die beteiligten Personen durch eine E-Mail.
+\end{enumerate}
+
+\subsection{Maßnahmen Qualitätssicherung}
+Um sicherzustellen, dass dieses Projekt sämtlichen Qualitätsanforderungen entspricht, wie in \reference{sec:qualitätsanforderungen} beschrieben, werden für Änderungen sogenannte \Gls{merge-request}s erstellt.
+Hierzu wird eine \Gls{continuous-integration}(\acrshort{CI}) \Gls{pipeline} erstellt.
+Damit werden \Gls{unit-test}s automatisiert ausgeführt.
+Zusätzlich wird auch ein \Gls{lint} und ein Codeformatierer ausgeführt.
+Dadurch wird gewährleistet, dass sämtlicher Code die Normen der Sprache erfüllt und auch die aktuellen \Gls{feature}s der Sprache genutzt wird.
+
+\subsection{Schutzbedarfsanalyse}
+Für dieses Projekt ist keine Schutzbedarfsanalyse vorgesehen.
+Dies liegt daran, dass es eine firmeninterne Anwendung ist.
+Auf dem Server, auf welchem die Anwendung laufen soll, ist der Zugang nur für ausgewählte Mitarbeiter erlaubt.
+Somit kann auf dem Server kein Unbefugter zugreifen.
+Daher gibt es keine sicherheitsrelevanten Anforderungen.

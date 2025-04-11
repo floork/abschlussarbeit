@@ -1,0 +1,34 @@
+\section{Einleitung}
+
+\subsection{Projektumfeld}
+An der Technischen Universität (\acrshort{TU}) Dresden bin ich am \acrlong{ZIH} (\gls{ZIH-glos}) beschäftigt.
+Das \acrshort{ZIH} betreut zentrale IT-Dienste für Mitarbeitende, Studierende sowie andere Angehörige der Universität.
+Zudem ist es für den Betrieb des Rechenzentrums verantwortlich.
+Zur Echtzeitverarbeitung von Betriebs- und Leistungsdaten nutzt das Rechenzentrum der \acrshort{TU} Dresden das hochskalierbare \gls{framework} \gls{MetricQ}.
+Über \gls{MetricQ} werden Metriken wie die Temperatur von Serverknoten, der Stromverbrauch von \acrshort{PDU}s oder sicherheitsrelevante Zustände (z.\,B. Türstatus) erfasst.
+Diese Daten werden an ein zentrales Monitoring-System weitergeleitet, um einen umfassenden Überblick über den Systemzustand zu erhalten.
+Aktuell wird hierfür \gls{Centreon} eingesetzt.
+Da \gls{Centreon} \gls{MetricQ} nicht nativ unterstützt, ist eine aufwändige manuelle Konfiguration der Überwachungschecks erforderlich.
+
+\subsection{Projektziel}
+Ziel des Projekts ist die Entwicklung einer automatisierten Schnittstelle zwischen \gls{MetricQ} und dem neuen Monitoring-System \gls{Checkmk}.
+Die Anwendung soll anhand von Metadaten und Namensschemata automatisch die IT-Infrastruktur abbilden und entsprechende Überwachungschecks generieren.
+Änderungen an der Infrastruktur sollen automatisch erkannt werden, wodurch der manuelle Konfigurationsaufwand reduziert, Fehlerquellen minimiert und die Betriebssicherheit erhöht werden.
+
+\subsection{Projektbegründung}
+Die Durchführung des Projekts ist notwendig, da das bisher eingesetzte System \gls{Centreon} \gls{MetricQ} nicht nativ unterstützt.
+Ein weiterer Grund ist, dass \gls{Centreon} durch \gls{Checkmk} abgelöst wird.
+Die derzeitige manuelle Konfiguration der Überwachungschecks ist zeitaufwändig und fehleranfällig.
+Durch die zu entwickelnde Schnittstelle werden diese Prozesse automatisiert, wodurch Fehler reduziert und die Betriebssicherheit signifikant erhöht wird.
+Zusätzlich verbessert die Automatisierung die Effizienz im Rechenzentrumsbetrieb und spart langfristig Kosten und Zeit.
+
+\subsection{Projektschnittstellen}
+Die zu entwickelnde Dienstanwendung bildet die Schnittstelle zwischen \gls{MetricQ} und \gls{Checkmk}.
+Sie kommuniziert mit \gls{MetricQ}, um auf Basis bereitgestellter Metadaten und Namensschemata die IT-Infrastruktur zu erfassen und generiert daraus automatisch Überwachungschecks für \gls{Checkmk}.
+Neben dieser primären technischen Schnittstelle ist vorgesehen, dass die Anwendung von IT-System-Administratoren genutzt wird.
+Diese sollen die Schnittstelle nutzten, um den Zustand des Rechenzentrums effizient zu überwachen und bei Bedarf Benachrichtigungen über notwendige Maßnahmen zu erhalten.
+
+\subsection{Projektabgrenzung}
+Das Projekt umfasst ausschließlich die Entwicklung der Schnittstelle zwischen \gls{MetricQ} und \gls{Checkmk}.
+Nicht Bestandteil der Arbeit sind die vollständige Einführung oder Konfiguration von \gls{Checkmk} sowie Änderungen an der \gls{MetricQ}-Plattform.
+Ebenso ist die Integration weiterer Systeme, die über die beiden genannten Anwendungen hinausgehen, nicht Teil des Projektumfangs.

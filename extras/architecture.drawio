@@ -1,0 +1,105 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (X11; Linux x86_64; rv:137.0) Gecko/20100101 Firefox/137.0" version="26.2.8">
+  <diagram name="Page-1" id="OZbyIuNmOI4yqD_JnYF7">
+    <mxGraphModel dx="937" dy="571" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="QWxM3-F8CgcxxpEPChXc-1" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="330" y="100" width="510" height="390" as="geometry" />
+        </mxCell>
+        <mxCell id="QWxM3-F8CgcxxpEPChXc-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;endArrow=classic;startFill=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endFill=1;" edge="1" parent="1" source="QWxM3-F8CgcxxpEPChXc-27" target="QWxM3-F8CgcxxpEPChXc-24">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="450" y="250" as="sourcePoint" />
+            <mxPoint x="450" y="350.0000000000001" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="QWxM3-F8CgcxxpEPChXc-16" value="Ausgewertete&lt;br&gt;Daten (Checks)" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="QWxM3-F8CgcxxpEPChXc-13">
+          <mxGeometry x="-0.1234" y="1" relative="1" as="geometry">
+            <mxPoint x="-1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="QWxM3-F8CgcxxpEPChXc-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;endArrow=classic;startFill=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;endFill=1;" edge="1" parent="1" source="QWxM3-F8CgcxxpEPChXc-3" target="QWxM3-F8CgcxxpEPChXc-27">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="489.9999999999998" y="215" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="QWxM3-F8CgcxxpEPChXc-15" value="Daten der Gebäudeautomation" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="QWxM3-F8CgcxxpEPChXc-12">
+          <mxGeometry x="0.2982" y="2" relative="1" as="geometry">
+            <mxPoint x="27" y="-2" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="QWxM3-F8CgcxxpEPChXc-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=classic;startFill=0;endFill=1;" edge="1" parent="1" source="QWxM3-F8CgcxxpEPChXc-24" target="QWxM3-F8CgcxxpEPChXc-21">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="489.9999999999998" y="385.0000000000001" as="sourcePoint" />
+            <mxPoint x="700" y="385.0000000000001" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="QWxM3-F8CgcxxpEPChXc-17" value="Einlesen der Checks" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="QWxM3-F8CgcxxpEPChXc-14">
+          <mxGeometry x="-0.1931" y="-3" relative="1" as="geometry">
+            <mxPoint x="15" y="-3" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="QWxM3-F8CgcxxpEPChXc-6" value="Dienstanwendung" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="395" y="160" width="110" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="QWxM3-F8CgcxxpEPChXc-7" value="MetricQ" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="685" y="160" width="110" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="QWxM3-F8CgcxxpEPChXc-8" value="Spool Ordner" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="395" y="420" width="110" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="QWxM3-F8CgcxxpEPChXc-9" value="Checkmk" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="685" y="420" width="110" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="QWxM3-F8CgcxxpEPChXc-11" value="Abschlussprojekt" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="380" y="110" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="QWxM3-F8CgcxxpEPChXc-19" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="700" y="180" width="80" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="QWxM3-F8CgcxxpEPChXc-3" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="QWxM3-F8CgcxxpEPChXc-19">
+          <mxGeometry width="80" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="QWxM3-F8CgcxxpEPChXc-18" value="" style="sketch=0;pointerEvents=1;shadow=0;dashed=0;html=1;strokeColor=none;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;align=center;fillColor=#505050;shape=mxgraph.mscae.oms.services" vertex="1" parent="QWxM3-F8CgcxxpEPChXc-19">
+          <mxGeometry x="15.5" y="10" width="49" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="QWxM3-F8CgcxxpEPChXc-20" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="700" y="350" width="80" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="QWxM3-F8CgcxxpEPChXc-21" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="QWxM3-F8CgcxxpEPChXc-20">
+          <mxGeometry width="80" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="QWxM3-F8CgcxxpEPChXc-22" value="" style="sketch=0;pointerEvents=1;shadow=0;dashed=0;html=1;strokeColor=none;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;align=center;fillColor=#505050;shape=mxgraph.mscae.oms.services" vertex="1" parent="QWxM3-F8CgcxxpEPChXc-20">
+          <mxGeometry x="15.5" y="10" width="49" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="QWxM3-F8CgcxxpEPChXc-23" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="410" y="350" width="80" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="QWxM3-F8CgcxxpEPChXc-24" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="QWxM3-F8CgcxxpEPChXc-23">
+          <mxGeometry width="80" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="QWxM3-F8CgcxxpEPChXc-25" value="" style="sketch=0;pointerEvents=1;shadow=0;dashed=0;html=1;strokeColor=none;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;align=center;fillColor=#505050;shape=mxgraph.mscae.oms.services" vertex="1" parent="QWxM3-F8CgcxxpEPChXc-23">
+          <mxGeometry x="15.5" y="10" width="49" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="QWxM3-F8CgcxxpEPChXc-26" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="410" y="180" width="80" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="QWxM3-F8CgcxxpEPChXc-27" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="QWxM3-F8CgcxxpEPChXc-26">
+          <mxGeometry width="80" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="QWxM3-F8CgcxxpEPChXc-28" value="" style="sketch=0;pointerEvents=1;shadow=0;dashed=0;html=1;strokeColor=none;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;align=center;fillColor=#505050;shape=mxgraph.mscae.oms.services" vertex="1" parent="QWxM3-F8CgcxxpEPChXc-26">
+          <mxGeometry x="15.5" y="10" width="49" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="QWxM3-F8CgcxxpEPChXc-30" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="330" y="100" width="50" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="QWxM3-F8CgcxxpEPChXc-10" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="QWxM3-F8CgcxxpEPChXc-30">
+          <mxGeometry width="50" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="QWxM3-F8CgcxxpEPChXc-29" value="" style="sketch=0;pointerEvents=1;shadow=0;dashed=0;html=1;strokeColor=none;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;align=center;fillColor=#505050;shape=mxgraph.mscae.oms.dependency_monitor" vertex="1" parent="QWxM3-F8CgcxxpEPChXc-30">
+          <mxGeometry x="8.333333333333334" y="8.333333333333334" width="33.333333333333336" height="33.333333333333336" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,0 +1,92 @@
+\documentclass[
+  11pt,
+  a4paper,
+  ngerman,
+]{article}
+\input{latex_files/meta.tex}
+\input{latex_files/packages.tex}
+\input{latex_files/glossary.tex}
+
+\title{\textbf{Projektdokumentation Florian Mros}}
+\author{\autorName}
+
+\fancyhf{} % sets both header and footer to nothing
+\renewcommand{\headrulewidth}{0pt}
+
+\begin{document}
+\pagenumbering{gobble}  % No page numbers for front matter
+\input{latex_files/chapters/00_deckblatt.tex}
+\clearpage
+
+\pagestyle{fancy} % Seitenzahlen aktivieren
+\fancyhead[R]{\raisebox{-0.5\height}{\includegraphics[width=2cm]{images/ZIH_Logo_Abk_RGB.png}}}
+\fancyfoot[L]{\autorName}
+
+\input{latex_files/chapters/001_antrag.tex}
+\clearpage
+
+\tableofcontents
+\clearpage
+
+\listoffigures
+\clearpage
+
+\listoftables
+\clearpage
+
+\printglossary[title=Abkrüzungsverzeichnis, type=\acronymtype, nonumberlist]
+\printglossary[title=Glossar, toctitle=Glossar, nonumberlist]
+\newpage
+
+\pagenumbering{arabic}  % Start numbering at introduction
+\setcounter{page}{1}
+\pagestyle{fancy}
+\fancyhead[L] {\leftmark}
+\fancyfoot[C]{}
+\fancyfoot[R]{\thepage}
+
+% Main content
+
+\input{latex_files/chapters/01_einleitung.tex}
+
+\input{latex_files/chapters/02_projektplanung.tex}
+
+\input{latex_files/chapters/03_analysephase.tex}
+
+\input{latex_files/chapters/04_entwurfsphase.tex}
+
+\input{latex_files/chapters/05_implementierungsphase.tex}
+
+\input{latex_files/chapters/06_abnahmephase.tex}
+
+\input{latex_files/chapters/07_einfuehrungsphase}
+
+\input{latex_files/chapters/08_dokumentation.tex}
+
+\input{latex_files/chapters/09_fazit.tex}
+
+% Appendices
+\clearpage
+\pagenumbering{roman}  % Use Roman numbering for appendices
+\bibliographystyle{IEEEtran}
+\bibliography{latex_files/sources}
+
+% \input{latex_files/chapters/10_quellen.tex}
+
+\clearpage
+\fancyhead[L] {Anhang}
+\input{latex_files/chapters/10_anhang.tex}
+
+\clearpage
+\pagenumbering{gobble}  % No numbering for final pages
+\begingroup  % isolate changes to the kundendoku section
+% add section in TOC that there is a kundendoku section
+\addcontentsline{toc}{section}{B Kundendokumentation}
+
+\let\oldaddcontentsline\addcontentsline
+\renewcommand{\addcontentsline}[3]{}
+\input{latex_files/chapters/kundendoku/doku-main.tex}
+\let\addcontentsline\oldaddcontentsline
+\endgroup
+
+\end{document}

@@ -1,0 +1,83 @@
+\clearpage
+
+\setcounter{section}{0}
+\setcounter{subsection}{0}
+\setcounter{figure}{0}
+\setcounter{table}{0}
+\setcounter{lstlisting}{0}
+\setcounter{page}{1}
+\pagenumbering{arabic}
+
+\pagenumbering{gobble}
+
+\fancyhf{}
+% Title page
+\begin{center}
+  \vspace*{\fill}
+  {\Huge\bfseries B Kundendokumentation \par}
+  \vspace*{\fill}
+\end{center}
+
+\clearpage
+\input{latex_files/chapters/kundendoku/kunden-doku-deckblatt.tex}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[R]{\raisebox{-0.5\height}{\includegraphics[width=2cm]{images/ZIH_Logo_Abk_RGB.png}}}
+\fancyhead[L]{Kundendokumentation}
+\fancyfoot[L]{\autorName}
+\fancyfoot[R]{\thepage}
+
+\addcontentsline{toc}{part}{B Kundendokumentation}
+
+% === Local TOC for Kundendokumentation ===
+% sections
+% \textbf{\fullref{sec:einleitung}} \dotfill \textbf{\pageref{sec:einleitung}} \\[0.5ex]
+% subsection
+% \hspace{1.5em} \fullref{subsec:bar} \dotfill \pageref{subsec:bar} \\[0.5ex]
+
+\section*{Inhaltsverzeichnis}
+\begin{flushleft}
+  \textbf{\fullref{sec:einleitung}} \dotfill \textbf{\pageref{sec:einleitung}} \\[0.5ex]
+  \textbf{\fullref{sec:einrichtung-der-anwendung}} \dotfill \textbf{\pageref{sec:einrichtung-der-anwendung}} \\[0.5ex]
+  \textbf{\fullref{sec:einrichtung-der-konfiguration}} \dotfill \textbf{\pageref{sec:einrichtung-der-konfiguration}} \\[0.5ex]
+  \hspace{1.5em} \fullref{subsec:aufbau-der-konfiguration} \dotfill \pageref{subsec:aufbau-der-konfiguration} \\[0.5ex]
+  \hspace{3em} \fullref{subsubsec:beispiel-template-konfiguration} \dotfill \pageref{subsubsec:beispiel-template-konfiguration} \\[0.5ex]
+  \hspace{3em} \fullref{subsubsec:beispiel-racks-konfiguration} \dotfill \pageref{subsubsec:beispiel-racks-konfiguration} \\[0.5ex]
+  \textbf{\fullref{sec:nutzung-der-anwendung}} \dotfill \textbf{\pageref{sec:nutzung-der-anwendung}} \\[0.5ex]
+  \textbf{\fullref{sec:testen-der-konfiguration}} \dotfill \textbf{\pageref{sec:testen-der-konfiguration}} \\[0.5ex]
+  \textbf{\fullref{sec:ansicht-in-der-checkmk-weboberflaeche}} \dotfill \textbf{\pageref{sec:ansicht-in-der-checkmk-weboberflaeche}} \\[0.5ex]
+  \textbf{\fullref{sec:fehlerbehandlung}} \dotfill \textbf{\pageref{sec:fehlerbehandlung}} \\[0.5ex]
+  \textbf{\fullref{sec:contact}} \dotfill \textbf{\pageref{sec:contact}} \\[0.5ex]
+\end{flushleft}
+
+% === Local Abbildungsverzeichnis ===
+\clearpage
+
+\section*{Abbildungsverzeichnis}
+\begin{flushleft}
+  \fullref{lst:git-clone} \dotfill \pageref{lst:git-clone} \\[0.5ex]
+  \fullref{lst:venv} \dotfill \pageref{lst:venv} \\[0.5ex]
+  \fullref{lst:konfiguration} \dotfill \pageref{lst:konfiguration} \\[0.5ex]
+  \fullref{lst:beispiel-konfiguration} \dotfill \pageref{lst:beispiel-konfiguration} \\[0.5ex]
+  \fullref{lst:beispiel-konfiguration-complete} \dotfill \pageref{lst:beispiel-konfiguration-complete} \\[0.5ex]
+  \fullref{lst:start} \dotfill \pageref{lst:start} \\[0.5ex]
+  \fullref{lst:start-debug} \dotfill \pageref{lst:start-debug} \\[0.5ex]
+  \fullref{fig:checkmk_web_uebersicht} \dotfill \pageref{fig:checkmk_web_uebersicht} \\[0.5ex]
+  \fullref{lst:error-connect} \dotfill \pageref{lst:error-connect} \\[0.5ex]
+  \fullref{lst:error-not-found} \dotfill \pageref{lst:error-not-found} \\[0.5ex]
+  \fullref{lst:error-json} \dotfill \pageref{lst:error-json} \\[0.5ex]
+  \fullref{lst:error-template} \dotfill \pageref{lst:error-template} \\[0.5ex]
+  \fullref{lst:error-metric} \dotfill \pageref{lst:error-metric} \\[0.5ex]
+  \fullref{lst:error-metric2} \dotfill \pageref{lst:error-metric2} \\[0.5ex]
+  \fullref{lst:error-metric3} \dotfill \pageref{lst:error-metric3} \\[0.5ex]
+  \fullref{lst:error-rack} \dotfill \pageref{lst:error-rack} \\[0.5ex]
+  \fullref{lst:error-rack2} \dotfill \pageref{lst:error-rack2} \\[0.5ex]
+\end{flushleft}
+
+\clearpage
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+% Main content of Kundendokumentation
+\input{latex_files/chapters/kundendoku/nutzerdoku_content.tex}

@@ -1,0 +1,245 @@
+\section{Einleitung}\label{sec:einleitung}
+Diese Dokumentation beschreibt die Installation, Konfiguration und Anwendung von \texttt{checkQ}.
+Sie ist für den hauptverantwortlichen Nutzer der Anwendung gedacht.
+Die Software dient der automatisierten Generierung und Übertragung von Konfigurationsdaten im Checkmk-Piggyback-Format zur strukturierten Überwachung von Services und Racks.
+
+\section{Einrichtung der Anwendung}\label{sec:einrichtung-der-anwendung}
+Um die Anwendung nutzen zu können, muss das Repository zunächst geklont werden. Verwenden Sie dazu den folgenden Befehl:
+
+\begin{lstlisting}[language=bash, caption=Klonen des Repositories, label=lst:git-clone]
+git clone https://eine-interne-url.de
+\end{lstlisting}
+
+\noindent
+Nach dem Klonen sollten die Abhängigkeiten in einem virtuellen Python-Environment installiert werden.
+Dadurch wird die Umgebung isoliert und Konflikte mit systemweiten Python-Paketen vermieden.
+
+\begin{lstlisting}[language=bash, caption=Erstellen und Aktivieren eines virtuellen Environments, label=lst:venv]
+python3 -m venv venv
+source venv/bin/activate
+pip install .
+\end{lstlisting}
+
+\section{Einrichtung der Konfiguration}\label{sec:einrichtung-der-konfiguration}
+Um eine Konfiguration zu erstellen muss man die \textit{config.json} Datei in der \textit{Root} des Projekts editieren.
+
+\subsection{Aufbau der Konfiguration}\label{subsec:aufbau-der-konfiguration}
+Die Konfiguration besteht aus zwei Hauptbestandteilen: \textit{templates} und \textit{racks}.
+Die \textit{templates} definieren die Struktur des Rechenzentrums, während die \textit{racks} die einzelnen Server-Racks beschreiben.
+
+\begin{lstlisting}[language=Python, caption=Aufbau Konfiguration, label=lst:konfiguration]
+{
+  "templates": {
+    "services": { },
+    "racks": { }
+  },
+"racks": { }
+}
+\end{lstlisting}
+
+\subsubsection{Beispiel Template Konfiguration}\label{subsubsec:beispiel-template-konfiguration}
+Ein Beispiel für ein \textit{template} könnte so aussehen:
+
+\begin{lstlisting}[language=Python, caption=Beispiel templates Konfiguration, label=lst:beispiel-konfiguration]
+  "templates": {
+    "services": {
+      "CheckName": {
+        "thresholds": {
+          warn_below: 30,
+          "warn_above": 37,
+          "critical_below": 38,
+          "critical_above": 42
+        },
+        "metric": "metric.{rack}.{special}.something"
+      },
+    "racks": {
+      "test": {
+        "labels": [{ "cluster": "Test" }],
+        "services": [
+          "CheckName"
+        ]
+      }
+    }
+  },
+  "racks": {}
+}
+\end{lstlisting}
+
+\noindent
+In diesem Beispiel wird der Check \textit{CheckName} definiert.
+Dem Check werden anschließend entsprechende Schwellwerte zugewiesen.
+Bei den Schwellwerten müssen aber nicht alle Schwellwerte definiert werden, wenn sie nicht benutzt werden.
+Zum Schluss wird noch die \textit{metric} zu definiert.
+In dieser können, um die Konfiguration zu erleichtern, \textit{Platzhalter} verwendet werden.
+Standardmäßig gibt es immer den Platzhalter \textit{room}.
+Diese stammen aus der Definition im Abschnitt \textit{racks}, welcher nicht in den \textit{templates} ist.
+Es ist aber auch möglich, eigene Platzhalter zu definieren, die dann mit den Platzhalter aus dem \textit{template} ersetzt werden.
+
+\newpage
+\subsubsection{Beispiel Racks Konfiguration}\label{subsubsec:beispiel-racks-konfiguration}
+Ein vollständiges Beispiel mit dem dazugehörigen \textit{racks} könnte so aussehen:
+
+\begin{lstlisting}[language=Python, caption=Beispiel komplette Konfiguration, label=lst:beispiel-konfiguration-complete]
+  "templates": {
+    "services": {
+      "CheckName": {
+        "thresholds": {
+          "warn_below": 30,
+          "warn_above": 37,
+          "critical_below": 38,
+          "critical_above": 42
+        },
+        "metric": "metric.{rack}.{special}.something"
+      },
+    "racks": {
+      "test1": {
+        "labels": [{ "cluster": "Test" }],
+        "services": [
+          "CheckName"
+        ]
+      }
+    }
+  },
+  "racks": {
+    "RACK0815": {
+      "room": "A42",
+      "template": "test1",
+      "parameters": {
+        "rack": "RACK0815",
+        "special": "R2D2"
+      }
+    }
+  }
+}
+\end{lstlisting}
+
+\noindent
+Hier haben wir nun zu unserem \textit{templates} auch ein \textit{rack} definiert.
+Dieses \textit{rack} hat einen Namen als \textit{Key}, in diesem Fall \texttt{RACK0815}.
+In jedem \textit{rack} haben wir nun den \textit{room} und das \textit{template} definiert.
+Zusätzlich haben wir auch die \textit{parameters} definiert.
+Bei diesen kommt es darauf an, dass wir die gleichen Namen wie im \textit{template} nutzen.
+
+\section{Nutzung der Anwendung}\label{sec:nutzung-der-anwendung}
+Die Anwendung kann mit folgenden Befehlen genutzt werden:
+
+\begin{lstlisting}[language=bash, caption=Anwendung starten, label=lst:start]
+sudo /home/USER/checkQ/venv/bin/python main.py --server user:passwd@some-address.de --token some-token
+\end{lstlisting}
+
+\section{Testen der Konfiguration}\label{sec:testen-der-konfiguration}
+Die Anwendung kann zum Testen der Konfiguration genutzt werden, ohne Dateien in den \textit{Spool} Ordner zu schreiben.
+Hierzu kann der Parameter \texttt{--debug} verwendet werden.
+Mit diesem kann ein Pfad angegeben werden, wo die fertigen Piggyback Dateien gespeichert werden sollen.
+Dies würde beispielsweise so aussehen:
+
+\begin{lstlisting}[language=bash, caption=Anwendung Debug starten, label=lst:start-debug]
+sudo /home/USER/checkQ/venv/bin/python main.py --server user:passwd@some-address.de --token some-token --debug /home/USER/test
+\end{lstlisting}
+
+\noindent
+Somit würde die fertigen Piggyback Dateien im Ordner \texttt{/home/USER/test} gespeichert werden.
+
+\section{Ansicht in der Checkmk Weboberfläche}\label{sec:ansicht-in-der-checkmk-weboberflaeche}
+Die Anwendung kann in der Weboberfläche von \Gls{Checkmk} genutzt werden.
+Dazu muss die Anwendung zuerst genutzt werden.
+
+\begin{figure}[H]
+  \captionsetup{list=false} % Disable the list entry for this figure
+  \centering
+  \includegraphics[width=\textwidth]{images/tbd.png}
+  \caption{Weboberfläche} % Normal caption, but no list entry
+  \label{fig:checkmk_web_uebersicht}
+\end{figure}
+
+\section{Fehlerbehandlung}\label{sec:fehlerbehandlung}
+Fehlermeldung:
+\begin{lstlisting}[language=bash, caption=Verbindung fehlgeschlagen, label=lst:error-connect]
+python main.py --server="amqp://admin:admin@localhost/" --debug ./output
+error: Failed to connect MetricQSink: Multiple exceptions: ...
+error: Failed to connect MetricQSink: Failed to connect Agent (ConnectFailed)
+critical: Failed to connect Agent: Failed to connect Agent
+\end{lstlisting}
+
+\noindent
+Die Anwendung kann keine Verbindung zu \textit{MetricQ} herstellen.
+
+\begin{lstlisting}[language=bash, caption=Konfiguration nicht gefunden, label=lst:error-not-found]
+python main.py --server="amqp://admin:admin@localhost/" --debug ./output
+error: Config file not found
+critical: Failed to connect Agent: Failed to connect Agent
+\end{lstlisting}
+
+\noindent
+Die Anwendung kann keine Konfiguration finden.
+
+\begin{lstlisting}[language=bash, caption=Fehler beim Parsen der Konfiguration, label=lst:error-json]
+python main.py --server="amqp://admin:admin@localhost/" --debug ./output
+error: Error parsing JSON file at line 42, column 8: unexpected end of JSON input
+critical: Failed to connect Agent: Failed to connect Agent
+\end{lstlisting}
+
+\noindent
+Die Anwendung hat einen Fehler beim Parsen der Konfiguration gefunden.
+Hier wird die Position der Fehlermeldung ausgegeben (wo in der Konfiguration der Fehler aufgetreten ist).
+
+\begin{lstlisting}[language=bash, caption=Template nicht gefunden, label=lst:error-template]
+python main.py --server="amqp://admin:admin@localhost/" --debug ./output
+error: Service template 'TestServiceName' not found (line 42)
+critical: Failed to connect Agent: Failed to connect Agent
+\end{lstlisting}
+
+\noindent
+Die Anwendung kann ein Template nicht finden.
+Dass passiert, wenn bei einem Template (\textit{template}->\textit{racks}) ein Service angegeben wurde welcher nicht definiert ist.
+
+\begin{lstlisting}[language=bash, caption=Standard Parameter nicht gefunden, label=lst:error-metric]
+python main.py --server="amqp://admin:admin@localhost/" --debug ./output
+error: Missing required parameter 'FOO' in metric definition for service 'TestServiceName' (line 42)
+critical: Failed to connect Agent: Failed to connect Agent
+\end{lstlisting}
+
+\noindent
+Die Anwendung hat einen Parameter nicht bekommen, welcher in der Konfiguration definiert ist.
+Ein beispiel hier ist, dass der \texttt{room} nicht definiert ist.
+
+\begin{lstlisting}[language=bash, caption=Parameter nicht gefunden, label=lst:error-metric2]
+python main.py --server="amqp://admin:admin@localhost/" --debug ./output
+error: Invalid metric format for service 'TestServiceName': Missing parameter name inside curly braces (line 42)
+critical: Failed to connect Agent: Failed to connect Agent
+\end{lstlisting}
+
+\noindent
+Die Anwendung hat einen Parameter nicht bekommen, welcher in der Konfiguration definiert ist.
+Ein beispiel hier ist, dass ein Parameter welcher in einem Template definiert ist nicht mitgegeben wird.
+
+\begin{lstlisting}[language=bash, caption=Formatfehler, label=lst:error-metric3]
+python main.py --server="amqp://admin:admin@localhost/" --debug ./output
+error: Malformed metric format in service 'TestServiceName': SOME ERROR MESSAGE (line 42)
+critical: Failed to connect Agent: Failed to connect Agent
+\end{lstlisting}
+
+\noindent
+Die Anwendung hat festgestellt, dass ein Formatfehler in der Konfiguration vorkommt.
+Dies kann z.\,B. passieren, wenn eine geschwungene Klammer fehlt.
+
+\begin{lstlisting}[language=bash, caption=Rack Template nicht gefunden, label=lst:error-rack]
+python main.py --server="amqp://admin:admin@localhost/" --debug ./output
+error: Rack template 'FOO_CLUSTER' not found (line 42)
+critical: Failed to connect Agent: Failed to connect Agent
+\end{lstlisting}
+
+\noindent
+In den definierten Racks wurde ein Template angegeben, welcher nicht gefunden wurde.
+
+\begin{lstlisting}[language=bash, caption=Generelle Konfigurationsfehler, label=lst:error-rack2]
+python main.py --server="amqp://admin:admin@localhost/" --debug ./output
+error: Error in rack 'RACK_FOO', service 'SERVICE_FOO': SOME ERROR MESSAGE
+critical: Failed to connect Agent: Failed to connect Agent
+\end{lstlisting}
+
+\noindent
+Dieser Fehler zeigt generelle Fehler in einem Rack, oder ein Fehler in einem Service an.
+
+\section{Ansprechpartner}\label{sec:contact}
+Ansprechpartner für Fragen und Hilfe: \textit{ZIH Service Desk} unter \textit{servicedesk@tu-dresden.de}.
